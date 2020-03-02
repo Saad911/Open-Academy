@@ -7,24 +7,21 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='vat']" position="after">
-                <field name="instructor_price" readonly="0" />
-            </xpath>
-
-
+                <field name="instructor_price" readonly="0" attrs="{'invisible': [('instructor', '=', False)]}" />
+                </xpath>
                 <notebook position="inside">
                     <page string="Sessions">
-<!--                        <field name="button_clicked"/>-->
                         <div class="oe_button_box" name="button_box">
-                        <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o">
-                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
-                        </button>
+                            <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o">
+                                   <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                            </button>
                         </div>
                 <sheet>
                         <header>
                             <button string="FACTURER SESSIONS" class="oe_highlight" name="facturer_client" type="object" ></button>
 
                         </header>
-<!--                            <field name="button_clicked" invisible="1"/>-->
+                            <field name="button_clicked" invisible="1"/>
                         <group>
                             <field name="instructor"/>
                             <field name="session_ids"/>

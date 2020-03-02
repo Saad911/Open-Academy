@@ -112,7 +112,6 @@
                         <field name="button_clicked" invisible="1"/>
 
                         <group>
-                            <field name="button_clicked"/>
                            <group string="General">
                                 <field name="course_id"/>
                                 <field name="name"/>

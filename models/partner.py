@@ -11,9 +11,6 @@ class Partner(models.Model):
     invoice_ids = fields.One2many("account.move","session_id")
     date = fields.Datetime(required = True, default = fields.Date.context_today)
     instructor_price = fields.Float(type = 'Work for')
-
-
-
     def _compute_invoice_count(self):
         self.invoice_count = self.env['account.move'].search_count([('partner_id', '=', self.id)])
     def action_view_invoice(self):
@@ -37,6 +34,7 @@ class Partner(models.Model):
 
         action['context'] = context
         return action
+
     def facturer_client(self):
             self.button_clicked = True
 
