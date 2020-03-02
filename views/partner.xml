@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
  <odoo>
-
         <!-- Add instructor field to existing view -->
         <record model="ir.ui.view" id="partner_instructor_form_view">
             <field name="name">partner.instructor</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                <field name="instructor_price" readonly="0" />
+            </xpath>
+
+
                 <notebook position="inside">
                     <page string="Sessions">
+<!--                        <field name="button_clicked"/>-->
+                        <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                        </div>
+                <sheet>
+                        <header>
+                            <button string="FACTURER SESSIONS" class="oe_highlight" name="facturer_client" type="object" ></button>
+
+                        </header>
+<!--                            <field name="button_clicked" invisible="1"/>-->
                         <group>
                             <field name="instructor"/>
                             <field name="session_ids"/>
                         </group>
+                </sheet>
                     </page>
+
                 </notebook>
+
             </field>
         </record>
 
@@ -23,8 +42,10 @@
             <field name="res_model">res.partner</field>
             <field name="view_mode">tree,form</field>
         </record>
+
         <menuitem id="configuration_menu" name="Configuration"
                   parent="main_openacademy_menu"/>
+
         <menuitem id="contact_menu" name="Contacts"
                   parent="configuration_menu"
                   action="contact_list_action"/>
@@ -34,6 +55,7 @@
             <field name="res_model">res.partner.category</field>
             <field name="view_mode">tree,form</field>
         </record>
+
         <menuitem id="contact_cat_menu" name="Contact Tags"
                   parent="configuration_menu"
                   action="contact_cat_list_action"/>
@@ -41,6 +63,7 @@
         <record model="res.partner.category" id="teacher1">
             <field name="name">Teacher / Level 1</field>
         </record>
+
         <record model="res.partner.category" id="teacher2">
             <field name="name">Teacher / Level 2</field>
         </record>

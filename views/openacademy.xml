@@ -38,7 +38,7 @@
                             <field name="name"/>
                             <field name="responsible_id"/>
                         </group>
-			<notebook>
+			            <notebook>
                             <page string="Description">
                                 <field name="description"/>
                             </page>
@@ -87,24 +87,37 @@
                 </search>
             </field>
         </record>
-
-
         <!-- window action -->
         <!--
             The following tag is an action definition for a "window action",-->
-	
-	
+
 	<record model="ir.ui.view" id="session_form_view">
             <field name="name">session.form</field>
             <field name="model">openacademy.session</field>
             <field name="arch" type="xml">
                 <form string="Session Form">
+                    <header>
+                        <button string="Facturer" class="oe_highlight" name="facturer" type="object" attrs="{'invisible': ['|',('button_clicked', '=', True), ('state', '!=', 'validate')]}"></button>
+                        <button string="Send email" class="oe_highlight" name="send_mail"  type="object"></button>
+                        <button string="CONFIRM" type="object" name="confirm_progressbar" class="oe_highlight"  attrs="{'invisible': ['|',('state', '=', 'validate'),('state', '=', 'confirm')]}"/>
+                        <button string="VALIDATE" type="object" name="validate_progressbar" class="oe_highlight"  attrs="{'invisible': ['|',('state', '=', 'draft'),('state', '=', 'validate')]}" />
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                        </div>
+                        <field name="button_clicked" invisible="1"/>
+
                         <group>
+                            <field name="button_clicked"/>
                            <group string="General">
                                 <field name="course_id"/>
                                 <field name="name"/>
                                 <field name="instructor_id"/>
+                               <field name="instructor_price"/>
                                 <field name="active"/>
 
                             </group>
@@ -112,12 +125,21 @@
                                 <field name="start_date"/>
                                 <field name="duration"/>
                                 <field name="seats"/>
+                                <field name="price_per_hour"/>
+                                <field name="total"/>
+
+
                                 <field name="taken_seats" widget="progressbar"/>
                             </group>
+
                         </group>
                         <label for="attendee_ids"/>
                         <field name="attendee_ids"/>
                     </sheet>
+                    <div class = "oe_chatter">
+                        <field name="message_follower_ids" widget = "mail_followers"/>
+                        <field name="message_ids" widget ="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -132,6 +154,7 @@
                     <field name="course_id"/>
                     <field name="duration" invisible="1"/>
                     <field name="taken_seats" widget="progressbar"/>
+                   <field name="price_session" sum="Total Tax Included"/>
                 </tree>
             </field>
         </record>

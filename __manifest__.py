@@ -10,7 +10,7 @@
         Long description of module's purpose
     """,
 
-    'author': "My Company",
+    'author': "YOUSRA IBRAIMI - HASSINI SAAD - NIDAL RAHMOUNI",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -20,20 +20,22 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'board'],
+    'depends': ['base','board','mail','contacts','account','portal'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'security/security.xml',
+        'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
 	    'views/openacademy.xml',
         'views/partner.xml',
-	    'security/security.xml',
-        'security/ir.model.access.csv',
         'reports.xml',
         'views/session_board.xml',
-
+        'views/workflow.xml',
+        'data/mail_templates.xml',
+        'views/portal.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
