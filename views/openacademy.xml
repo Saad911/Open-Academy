@@ -78,11 +78,9 @@
                 <search>
                     <field name="name"/>
                     <field name="description"/>
-                    <filter name="my_courses" string="My Courses"
-                            domain="[('responsible_id', '=', uid)]"/>
+                    <filter name="my_courses" string="My Courses" domain="[('responsible_id', '=', uid)]"/>
                     <group string="Group By">
-                        <filter name="by_responsible" string="Responsible"
-                                context="{'group_by': 'responsible_id'}"/>
+                        <filter name="by_responsible" string="Responsible" context="{'group_by': 'responsible_id'}"/>
                     </group>
                 </search>
             </field>
@@ -126,11 +124,8 @@
                                 <field name="seats"/>
                                 <field name="price_per_hour"/>
                                 <field name="total"/>
-
-
                                 <field name="taken_seats" widget="progressbar"/>
                             </group>
-
                         </group>
                         <label for="attendee_ids"/>
                         <field name="attendee_ids"/>
@@ -142,8 +137,7 @@
                 </form>
             </field>
         </record>
-	
-	
+
         <record model="ir.ui.view" id="session_tree_view">
             <field name="name">session.tree</field>
             <field name="model">openacademy.session</field>
@@ -265,8 +259,7 @@
                         <field name="attendee_ids"/>
                     </group>
 		            <footer>
-                        <button name="subscribe" type="object"
-                                string="Subscribe" class="oe_highlight"/>
+                        <button name="subscribe" type="object" string="Subscribe" class="oe_highlight"/>
                         or
                         <button special="cancel" string="Cancel"/>
                     </footer>	
