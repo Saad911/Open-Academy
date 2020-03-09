@@ -1,4 +1,5 @@
 from odoo import fields, models
+from pprint import pprint
 
 class Partner(models.Model):
     _inherit = 'res.partner'
@@ -8,16 +9,20 @@ class Partner(models.Model):
     session_ids = fields.Many2many('openacademy.session',string="Attended Sessions", readonly=True)
     invoice_count = fields.Integer(string="count invoice" ,compute="_compute_invoice_count")
     button_clicked = fields.Boolean(string='Button clicked')
-    invoice_ids = fields.One2many("account.move","session_id")
     date = fields.Datetime(required = True, default = fields.Date.context_today)
     instructor_price = fields.Float(type = 'Work for')
+
     def _compute_invoice_count(self):
         self.invoice_count = self.env['account.move'].search_count([('partner_id', '=', self.id)])
+
     def action_view_invoice(self):
         invoices = self.mapped('invoice_ids')
-        action = self.env.ref('account.action_move_in_invoice_type').read()[0]
+        action = self.env.ref('account.action_move_out_invoice_type').read()[0]
         if len(invoices) > 1:
-            action['domain'] = [('id', 'in', invoices.ids)]
+
+            action['domain'] = [('partner_id', '=', self.id)]
+            #pprint(1)
+            #pprint(action)
         elif len(invoices) == 1:
             form_view = [(self.env.ref('account.view_move_form').id, 'form')]
             if 'views' in action:
@@ -25,13 +30,16 @@ class Partner(models.Model):
             else:
                 action['views'] = form_view
             action['res_id'] = invoices.id
+            #pprint(2)
+            #pprint(action)
         else:
             action = {'type': 'ir.actions.act_window_close'}
+            #pprint(3)
+            #pprint(action)
 
         context = {
-            'default_type': 'in_invoice',
+            'default_type': 'out_invoice',
         }
-
         action['context'] = context
         return action
 
@@ -55,7 +63,9 @@ class Partner(models.Model):
                     'price_unit' : i.price_per_hour
 
                      }
-                data['invoice_line_ids'].append((0,0,line))
+                #data['invoice_line_ids'].append((0,0,line))
+                data['invoice_line_ids'].append((line))
+
             invoice2 = self.env['account.move'].create(data)
 
 

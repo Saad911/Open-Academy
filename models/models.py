@@ -47,11 +47,9 @@ class Session(models.Model):
     color = fields.Integer()
     price_per_hour =  fields.Integer(help = "Price")
     total = fields.Integer( help = "total", compute = 'calc_total')
-    instructor_id = fields.Many2one('res.partner', string="Instructor",
-        domain=['|', ('instructor', '=', True), ('category_id.name', 'ilike', "Teacher")])
+    instructor_id = fields.Many2one('res.partner', string="Instructor", domain=['|', ('instructor', '=', True), ('category_id.name', 'ilike', "Teacher")])
     invoice_ids = fields.One2many("account.move","session_id")
-    course_id = fields.Many2one('openacademy.course',
-    ondelete='cascade', string="Course", required=True)
+    course_id = fields.Many2one('openacademy.course', ondelete='cascade', string="Course", required=True)
     attendee_ids = fields.Many2many('res.partner', string="Attendees")
     taken_seats = fields.Float(string="Taken seats", compute='_taken_seats')
     end_date = fields.Date(string="End Date", store=True, compute='_get_end_date', inverse='_set_end_date')
@@ -92,7 +90,7 @@ class Session(models.Model):
             action = {'type': 'ir.actions.act_window_close'}
 
         context = {
-            'default_type': 'out_invoice',
+            'default_type': 'in_invoice',
         }
 
         action['context'] = context
